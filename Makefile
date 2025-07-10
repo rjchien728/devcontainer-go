@@ -25,7 +25,8 @@ define build_template
 		-f $(DOCKERFILE) \
 		$($(1)) \
 		-t $(IMAGE_NAME):$(2) \
-		.
+		. && \
+	docker tag $(IMAGE_NAME):$(2) $(IMAGE_NAME):$(2)-persist
 endef
 
 .PHONY: all 1.18 1.21
