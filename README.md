@@ -2,21 +2,29 @@
 
 This project helps you build a reusable, versioned Go development image with common tools and a customized Zsh experience.
 
+---
+
 ## 🛠️ Usage
 
-### 1. Prepare Local Zsh Config (One-time)
+### 1. Prepare Local Zsh Config (Optional but Recommended)
 
-Copy your local Zsh setup into the `zsh-config/` folder:
+If you want to use your own `zsh` and `Powerlevel10k` settings, copy them into the `zsh-config/` directory:
 
 ```bash
 mkdir -p zsh-config/plugins
 cp ~/.zshrc zsh-config/
 cp ~/.p10k.zsh zsh-config/
-cp -r ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions zsh-config/plugins/
-cp -r ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting zsh-config/plugins/
 ```
 
-> These files will be baked into the image and applied to the `vscode` user.
+> The repo provides example versions of `.zshrc` and `.p10k.zsh`, but feel free to replace them with your own.
+
+You can also edit the files directly inside `zsh-config/`.
+
+No need to manually copy plugins — the following plugins are automatically cloned during image build:
+
+* `zsh-autosuggestions`
+* `zsh-syntax-highlighting`
+* `powerlevel10k`
 
 ---
 

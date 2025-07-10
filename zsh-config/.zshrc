@@ -35,11 +35,3 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Hyphen-insensitive completion: treats `-` and `_` as equivalent
 HYPHEN_INSENSITIVE="true"
-
-# Extend PATH
-export PATH="$PATH:$HOME/go/bin"
-
-
-# alias for lino dev environment
-alias lino-up='cd ~/infra-local/lino-test && docker compose up -d'
-alias lino-down='cd ~/infra-local/lino-test && docker compose down'

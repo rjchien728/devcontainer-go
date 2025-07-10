@@ -55,10 +55,11 @@ RUN chmod +x /usr/local/bin/post-start-cmd.sh
 # -------------------------
 COPY zsh-config/.zshrc /home/vscode/.zshrc
 COPY zsh-config/.p10k.zsh /home/vscode/.p10k.zsh
-COPY zsh-config/plugins /home/vscode/.oh-my-zsh/custom/plugins
 
-# Install Powerlevel10k theme
+# Install Powerlevel10k theme and plugins
 RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /home/vscode/.oh-my-zsh/custom/themes/powerlevel10k && \
+    git clone https://github.com/zsh-users/zsh-autosuggestions.git /home/vscode/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /home/vscode/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
     chown -R vscode:vscode \
         /home/vscode/.zshrc \
         /home/vscode/.p10k.zsh \
