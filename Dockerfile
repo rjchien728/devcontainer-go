@@ -20,7 +20,11 @@ RUN apt-get update && \
         socat \
         netcat-openbsd \
         sudo \
-        zsh && \
+        zsh \
+        tzdata && \
+    ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime && \
+    echo "Asia/Taipei" > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata && \
     rm -rf /var/lib/apt/lists/* && \
     echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd && \
     if [ ! -d "/root/.oh-my-zsh" ]; then \
