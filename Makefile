@@ -18,15 +18,14 @@ BUILD_ARGS_1_21 = \
 	--build-arg MOCKERY_VERSION=v2.32.4 \
 	--build-arg GOVULNCHECK_VERSION=v1.0.1
 
-# --- Generic build rule using buildx ---
+# --- Build function ---
 define build_template
 	docker buildx build \
 		--load \
 		-f $(DOCKERFILE) \
 		$($(1)) \
 		-t $(IMAGE_NAME):$(2) \
-		. && \
-	docker tag $(IMAGE_NAME):$(2) $(IMAGE_NAME):$(2)-persist
+		.
 endef
 
 .PHONY: all 1.18 1.21
