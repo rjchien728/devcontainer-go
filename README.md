@@ -1,6 +1,26 @@
+## ✨ DevContainer Base Image Setup
+
+This project helps you build a reusable, versioned Go development image with common tools and a customized Zsh experience.
+
 ## 🛠️ Usage
 
-### 1. Build the Image
+### 1. Prepare Local Zsh Config (One-time)
+
+Copy your local Zsh setup into the `zsh-config/` folder:
+
+```bash
+mkdir -p zsh-config/plugins
+cp ~/.zshrc zsh-config/
+cp ~/.p10k.zsh zsh-config/
+cp -r ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions zsh-config/plugins/
+cp -r ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting zsh-config/plugins/
+```
+
+> These files will be baked into the image and applied to the `vscode` user.
+
+---
+
+### 2. Build the Image
 
 Use `make` to build the desired Go version image:
 
@@ -12,14 +32,14 @@ make 1.18
 
 ---
 
-### 2. Copy `devcontainer.json`
+### 3. Copy `devcontainer.json`
 
 * Update the `"name"` field to match your project
 * Customize as needed (e.g., ports, extensions, env variables)
 
 ---
 
-### 3. Start Local Dependencies
+### 4. Start Local Dependencies
 
 If your project relies on services like MySQL or Redis, use the shared `docker-compose.yml`:
 
@@ -39,7 +59,7 @@ services:
 
 ---
 
-### 4. Port Forwarding into DevContainer with socat
+### 5. Port Forwarding into DevContainer with socat
 
 To simulate a local development environment inside the DevContainer:
 
