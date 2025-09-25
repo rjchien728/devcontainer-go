@@ -1,48 +1,51 @@
 {
-  "name": "YourFolderName",
-  "image": "devcontainer-go:1.18",
-  "workspaceFolder": "/YourFolderName",
-  "mounts": [
-    "source=${localWorkspaceFolder},target=/YourFolderName,type=bind,consistency=cached"
-  ],
-  "runArgs": [
-    "--add-host=host.docker.internal:host-gateway"
-  ],
-  "postCreateCommand": "go mod tidy",
-  "postStartCommand": "sudo bash /usr/local/bin/post-start-cmd.sh",
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "golang.go",
-        "eamodio.gitlens",
-        "zxh404.vscode-proto3",
+	"name": "YourFolderName",
+	"image": "devcontainer-go:1.21",
+	// "features": {
+	// 	"ghcr.io/devcontainers/features/node:1": {
+	// 		"version": "lts"
+	// 	}
+	// },
+	"workspaceFolder": "/YourFolderName",
+	"mounts": [
+		"source=${localWorkspaceFolder},target=/YourFolderName,type=bind,consistency=cached"
+	],
+	"runArgs": [
+		"--add-host=host.docker.internal:host-gateway",
+		"--name=vsc-YourFolderName"
+	],
+	"postCreateCommand": "go mod tidy",
+	"postStartCommand": "sudo bash /usr/local/bin/post-start-cmd.sh",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"golang.go",
+				"eamodio.gitlens",
+				"zxh404.vscode-proto3",
         "graphql.vscode-graphql"
-      ],
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "zsh"
-      }
-    }
-  },
-  "containerEnv": {
-    "MONGO_URI": "mongodb://127.0.0.1:27017"
-  },
-  "forwardPorts": [
-    8080,
-    8082,
-    4012
-  ],
-  "portsAttributes": {
-    "8080": {
-      "label": "Web API",
-      "onAutoForward": "openBrowser"
-    },
-    "8082": {
-      "label": "gRPC",
-      "onAutoForward": "notify"
-    },
-    "4012": {
-      "label": "Health Check",
-      "onAutoForward": "notify"
-    }
-  }
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh"
+			}
+		}
+	},
+	"forwardPorts": [
+		8080,
+		8082,
+		4012
+	],
+	"portsAttributes": {
+		"8080": {
+			"label": "Web API",
+			"onAutoForward": "openBrowser"
+		},
+		"8082": {
+			"label": "gRPC",
+			"onAutoForward": "notify"
+		},
+		"4012": {
+			"label": "Health Check",
+			"onAutoForward": "notify"
+		}
+	}
 }
