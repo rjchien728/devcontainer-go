@@ -7,32 +7,28 @@ BUILD_ARGS_1_18 = \
 	--build-arg PROTOC_GEN_GO_VERSION=v1.28.1 \
 	--build-arg PROTOC_GEN_GO_GRPC_VERSION=v1.2.0 \
 	--build-arg GOPLS_VERSION=v0.14.2 \
-	--build-arg MOCKERY_VERSION=v2.20.0 \
-	--build-arg GOVULNCHECK_VERSION=v1.0.1
+	--build-arg MOCKERY_VERSION=v2.20.0
 
 BUILD_ARGS_1_21 = \
 	--build-arg GO_VERSION=1.21 \
 	--build-arg PROTOC_GEN_GO_VERSION=v1.31.0 \
 	--build-arg PROTOC_GEN_GO_GRPC_VERSION=v1.3.0 \
-	--build-arg GOPLS_VERSION=v0.20.0 \
-	--build-arg MOCKERY_VERSION=v2.32.4 \
-	--build-arg GOVULNCHECK_VERSION=v1.0.1
+	--build-arg GOPLS_VERSION=v0.16.1 \
+	--build-arg MOCKERY_VERSION=v2.32.4
 
 BUILD_ARGS_1_23 = \
 	--build-arg GO_VERSION=1.23 \
 	--build-arg PROTOC_GEN_GO_VERSION=v1.36.0 \
 	--build-arg PROTOC_GEN_GO_GRPC_VERSION=v1.5.1 \
 	--build-arg GOPLS_VERSION=v0.20.0 \
-	--build-arg MOCKERY_VERSION=v2.47.0 \
-	--build-arg GOVULNCHECK_VERSION=v1.1.4
+	--build-arg MOCKERY_VERSION=v2.47.0
 
 BUILD_ARGS_1_24 = \
 	--build-arg GO_VERSION=1.24 \
 	--build-arg PROTOC_GEN_GO_VERSION=v1.36.9 \
 	--build-arg PROTOC_GEN_GO_GRPC_VERSION=v1.5.1 \
 	--build-arg GOPLS_VERSION=v0.20.0 \
-	--build-arg MOCKERY_VERSION=v2.50.0 \
-	--build-arg GOVULNCHECK_VERSION=v1.1.4
+	--build-arg MOCKERY_VERSION=v2.50.0
 
 # --- Build function ---
 define build_template

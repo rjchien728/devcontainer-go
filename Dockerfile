@@ -5,7 +5,6 @@ ARG PROTOC_GEN_GO_VERSION=v1.36.9
 ARG PROTOC_GEN_GO_GRPC_VERSION=v1.5.1
 ARG GOPLS_VERSION=v0.20.0
 ARG MOCKERY_VERSION=v2.37.1
-ARG GOVULNCHECK_VERSION=v1.1.0
 
 # -----------------------------
 # Base packages and shell setup
@@ -39,7 +38,6 @@ RUN apt-get update && \
 # -------------------------
 RUN go install golang.org/x/tools/gopls@${GOPLS_VERSION} && \
     go install github.com/vektra/mockery/v2@${MOCKERY_VERSION} && \
-    go install golang.org/x/vuln/cmd/govulncheck@${GOVULNCHECK_VERSION} && \
     go install google.golang.org/protobuf/cmd/protoc-gen-go@${PROTOC_GEN_GO_VERSION} && \
     go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@${PROTOC_GEN_GO_GRPC_VERSION}
 
