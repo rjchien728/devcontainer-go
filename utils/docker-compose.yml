@@ -5,18 +5,44 @@ services:
     ports:
       - "4306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: PASSWORD
-      MYSQL_DATABASE: defaultdb
+      MYSQL_ROOT_PASSWORD: my-secret
+      MYSQL_DATABASE: lino-donation_lino_db
     command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql-data:/var/lib/mysql
 
   redis:
     image: redis
     container_name: localredis
     ports:
       - "7379:6379"
+    volumes:
+      - redis-data:/data
 
   mongo:
     image: mongo:7
     container_name: localmongo
     ports:
       - "37017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - mongo-config:/data/configdb
+
+  kafka:
+    image: apache/kafka:4.1.0
+    container_name: localkafka
+    ports:
+      - "19092:9092"
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+      - kafka-secret:/etc/kafka/secrets
+      - kafka-config:/mnt/shared/config
+
+volumes:
+  mysql-data:
+  redis-data:
+  mongo-data:
+  mongo-config:
+  kafka-data:
+  kafka-secret:
+  kafka-config:

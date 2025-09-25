@@ -14,4 +14,7 @@ nohup socat TCP-LISTEN:6379,fork,reuseaddr TCP:host.docker.internal:7379 > /tmp/
 # Forward MySQL (3306 in container → 4306 on host)
 nohup socat TCP-LISTEN:3306,fork,reuseaddr TCP:host.docker.internal:4306 > /tmp/socat-mysql.log 2>&1 &
 
+# Forward Kafka (9092 in container → 19092 on host)
+nohup socat TCP-LISTEN:9092,fork,reuseaddr TCP:host.docker.internal:19092 > /tmp/socat-kafka.log 2>&1 &
+
 echo "post-start script done."
