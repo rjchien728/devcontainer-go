@@ -4,7 +4,7 @@ DOCKERFILE = Dockerfile
 # --- Version arguments per Go version ---
 BUILD_ARGS_1_18 = \
 	--build-arg GO_VERSION=1.18 \
-	--build-arg PROTOC_GEN_GO_VERSION=v1.28.1 \
+	--build-arg PROTOC_GEN_GO_VERSION=v1.23.0 \
 	--build-arg PROTOC_GEN_GO_GRPC_VERSION=v1.2.0 \
 	--build-arg GOPLS_VERSION=v0.14.2 \
 	--build-arg MOCKERY_VERSION=v2.20.0
