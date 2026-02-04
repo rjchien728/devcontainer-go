@@ -1,0 +1,49 @@
+{
+	"name": "YourProjectName",
+	"image": "devcontainer-node:20",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"moby": false
+		},
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "none",
+			"pnpmVersion": "latest"
+		}
+	},
+	"workspaceFolder": "/YourProjectName",
+	"mounts": [
+		"source=${localWorkspaceFolder},target=/YourProjectName,type=bind,consistency=cached"
+	],
+	"runArgs": [
+		"--add-host=host.docker.internal:host-gateway",
+		"--name=vsc-YourProjectName"
+	],
+	"remoteUser": "node",
+	"postCreateCommand": "pnpm install",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"eamodio.gitlens"
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh"
+			}
+		}
+	},
+	"forwardPorts": [
+		3000,
+		5173
+	],
+	"portsAttributes": {
+		"3000": {
+			"label": "App",
+			"onAutoForward": "openBrowser"
+		},
+		"5173": {
+			"label": "Vite Dev",
+			"onAutoForward": "openBrowser"
+		}
+	}
+}

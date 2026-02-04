@@ -1,5 +1,5 @@
 IMAGE_NAME = devcontainer-go
-DOCKERFILE = Dockerfile
+DOCKERFILE = go/Dockerfile
 
 # --- Version arguments per Go version ---
 BUILD_ARGS_1_18 = \
@@ -55,3 +55,20 @@ all: 1.18 1.21 1.23 1.24
 
 1.24:
 	$(call build_template,BUILD_ARGS_1_24,1.24)
+
+# ===========================================
+# Node.js DevContainer Images
+# ===========================================
+
+NODE_IMAGE_NAME = devcontainer-node
+NODE_DOCKERFILE = node/Dockerfile
+
+.PHONY: node-20
+
+node-20:
+	docker buildx build \
+		--load \
+		-f $(NODE_DOCKERFILE) \
+		--build-arg NODE_VERSION=20 \
+		-t $(NODE_IMAGE_NAME):20 \
+		.

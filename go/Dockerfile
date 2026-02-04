@@ -49,14 +49,14 @@ RUN mkdir -p /go/pkg/mod /go/pkg/sumdb && chmod -R 777 /go/pkg
 # -------------------------
 # Copy helper script
 # -------------------------
-COPY ./post-start-cmd.sh /usr/local/bin/post-start-cmd.sh
+COPY go/post-start-cmd.sh /usr/local/bin/post-start-cmd.sh
 RUN chmod +x /usr/local/bin/post-start-cmd.sh
 
 # -------------------------
 # Oh My Zsh config for vscode user
 # -------------------------
-COPY zsh-config/.zshrc /home/vscode/.zshrc
-COPY zsh-config/.p10k.zsh /home/vscode/.p10k.zsh
+COPY shared/zsh-config/.zshrc /home/vscode/.zshrc
+COPY shared/zsh-config/.p10k.zsh /home/vscode/.p10k.zsh
 
 # Install Powerlevel10k theme and plugins
 RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /home/vscode/.oh-my-zsh/custom/themes/powerlevel10k && \
