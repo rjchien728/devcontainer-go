@@ -1,5 +1,5 @@
 {
-	"name": "YourProjectName",
+	"name": "my-project",
 	"image": "devcontainer-node:20",
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
@@ -10,20 +10,36 @@
 			"pnpmVersion": "latest"
 		}
 	},
-	"workspaceFolder": "/YourProjectName",
+	"remoteUser": "node",
+	"workspaceFolder": "/my-project",
 	"mounts": [
-		"source=${localWorkspaceFolder},target=/YourProjectName,type=bind,consistency=cached"
+		"source=${localWorkspaceFolder},target=/my-project,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.claude,target=/tmp/local_claude,type=bind,readonly",
+		"source=${localEnv:HOME}/.gemini,target=/tmp/local_gemini,type=bind,readonly",
+		"source=${localEnv:HOME}/.config/opencode,target=/tmp/local_opencode,type=bind,readonly"
 	],
 	"runArgs": [
 		"--add-host=host.docker.internal:host-gateway",
-		"--name=vsc-YourProjectName"
+		"--name=vsc-my-project"
 	],
-	"remoteUser": "node",
-	"postCreateCommand": "pnpm install",
+	"containerEnv": {
+		"OPENCODE_DISABLE_CLAUDE_CODE": "1"
+	},
+	"onCreateCommand": {
+		"install-tools": "npm install -g @google/gemini-cli",
+		"install-claude": "curl -fsSL https://claude.ai/install.sh | bash",
+		"install-opencode": "curl -fsSL https://opencode.ai/install | bash && echo '# opencode' >> ~/.zshrc && echo 'export PATH=$HOME/.opencode/bin:$PATH' >> ~/.zshrc"
+	},
+	"postCreateCommand": {
+		"sync-claude": "mkdir -p ~/.claude && cp /tmp/local_claude/CLAUDE.md ~/.claude/ && cp -r /tmp/local_claude/skills ~/.claude/",
+		"sync-gemini": "mkdir -p ~/.gemini && cp /tmp/local_gemini/GEMINI.md ~/.gemini/ && cp -r /tmp/local_claude/skills ~/.gemini/",
+		"sync-opencode": "mkdir -p ~/.config/opencode && cp /tmp/local_opencode/opencode.json ~/.config/opencode/ && cp /tmp/local_opencode/AGENTS.md ~/.config/opencode/ && cp -r /tmp/local_claude/skills ~/.config/opencode/",
+		"fix-permissions": "sudo chown -R node:node ~/.claude ~/.gemini ~/.config/opencode",
+		"setup-npm": "pnpm install"
+	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"dbaeumer.vscode-eslint",
 				"esbenp.prettier-vscode",
 				"eamodio.gitlens"
 			],

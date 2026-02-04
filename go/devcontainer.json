@@ -1,18 +1,18 @@
 {
-	"name": "YourFolderName",
+	"name": "my-project",
 	"image": "devcontainer-go:1.21",
 	// "features": {
 	// 	"ghcr.io/devcontainers/features/node:1": {
 	// 		"version": "lts"
 	// 	}
 	// },
-	"workspaceFolder": "/YourFolderName",
+	"workspaceFolder": "/my-project",
 	"mounts": [
-		"source=${localWorkspaceFolder},target=/YourFolderName,type=bind,consistency=cached"
+		"source=${localWorkspaceFolder},target=/my-project,type=bind,consistency=cached"
 	],
 	"runArgs": [
 		"--add-host=host.docker.internal:host-gateway",
-		"--name=vsc-YourFolderName"
+		"--name=vsc-my-project"
 	],
 	"postCreateCommand": "go mod tidy",
 	"postStartCommand": "sudo bash /usr/local/bin/post-start-cmd.sh",
