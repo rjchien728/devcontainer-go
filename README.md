@@ -1,8 +1,8 @@
-## ✨ DevContainer Base Image Setup
+## DevContainer Base Image Setup
 
-This project helps you build a reusable, versioned Go development image with common tools and a customized Zsh experience.
+This project helps you build reusable, versioned development images for **Go** and **Node.js** with common tools and a customized Zsh experience.
 
-## 📖 Table of Contents
+## Table of Contents
 
 - [Quick Start](#-quick-start)
 - [Detailed Usage](#️-detailed-usage)
@@ -10,30 +10,37 @@ This project helps you build a reusable, versioned Go development image with com
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
+
+### Go Development
 
 1. **Build the image**: `make 1.23` (or your preferred Go version)
-2. **Copy and customize** `devcontainer.json` for your project
-3. **Start dependencies** (if needed): `docker compose -f utils/docker-compose.yml up -d`
+2. **Copy and customize** `go/devcontainer.json` for your project
+3. **Start dependencies** (if needed): `docker compose -f shared/utils/docker-compose.yml up -d`
 4. **Open in VS Code** and enjoy your fully configured Go environment!
+
+### Node.js Development
+
+1. **Build the image**: `make node-20`
+2. **Copy and customize** `node/devcontainer.json` for your project
+3. **Open in VS Code** and start developing!
 
 ---
 
-## 🛠️ Detailed Usage
+## Detailed Usage
 
 ### 1. Prepare Local Zsh Config (Optional but Recommended)
 
-If you want to use your own `zsh` and `Powerlevel10k` settings, copy them into the `zsh-config/` directory:
+If you want to use your own `zsh` and `Powerlevel10k` settings, copy them into the `shared/zsh-config/` directory:
 
 ```bash
-mkdir -p zsh-config/plugins
-cp ~/.zshrc zsh-config/
-cp ~/.p10k.zsh zsh-config/
+cp ~/.zshrc shared/zsh-config/
+cp ~/.p10k.zsh shared/zsh-config/
 ```
 
 > The repo provides example versions of `.zshrc` and `.p10k.zsh`, but feel free to replace them with your own.
 
-You can also edit the files directly inside `zsh-config/`.
+You can also edit the files directly inside `shared/zsh-config/`.
 
 No need to manually copy plugins — the following plugins are automatically cloned during image build:
 
@@ -45,23 +52,36 @@ No need to manually copy plugins — the following plugins are automatically clo
 
 ### 2. Build the Image
 
-Use `make` to build the desired Go version image:
+Use `make` to build the desired version image:
+
+#### Go Versions
 
 ```bash
 # Build specific versions
 make 1.18  # Go 1.18 with gopls v0.9.5, mockery v2.20.0
-make 1.21  # Go 1.21 with gopls v0.12.1, mockery v2.32.4  
+make 1.21  # Go 1.21 with gopls v0.12.1, mockery v2.32.4
 make 1.23  # Go 1.23 with gopls v0.17.0, mockery v2.47.0
+make 1.24  # Go 1.24 with latest tools
 
-# Build all versions at once
+# Build all Go versions at once
 make all
 ```
 
-> Each version includes version-specific tooling optimized for that Go release.
+> Each Go version includes version-specific tooling optimized for that release.
+
+#### Node.js Versions
+
+```bash
+make node-20  # Node.js 20 with pnpm
+```
 
 ---
 
-### 3. Copy `devcontainer.json`
+### 3. Copy DevContainer Configuration
+
+#### For Go Projects
+
+Copy `go/devcontainer.json` to your project and customize:
 
 * Update the `"name"` and `"workspaceFolder"` fields to match your project
 * Update the `"image"` field to match your built version (e.g., `"devcontainer-go:1.23"`)
@@ -79,20 +99,40 @@ make all
 }
 ```
 
+#### For Node.js Projects
+
+Copy `node/devcontainer.json` to your project and customize:
+
+* Update the `"name"` and `"workspaceFolder"` fields to match your project
+* Update the `"image"` field (e.g., `"devcontainer-node:20"`)
+* Customize ports and VS Code extensions as needed
+
+**Example customization:**
+```json
+{
+  "name": "my-node-project",
+  "image": "devcontainer-node:20",
+  "workspaceFolder": "/my-node-project",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/my-node-project,type=bind,consistency=cached"
+  ]
+}
+```
+
 ---
 
-### 4. Start Local Dependencies
+### 4. Start Local Dependencies (Go Projects)
 
 If your project relies on services like MySQL or Redis, use the shared `docker-compose.yml`:
 
 ```bash
-docker compose -f utils/docker-compose.yml up -d
+docker compose -f shared/utils/docker-compose.yml up -d
 ```
 
 Example:
 
 ```yaml
-# utils/docker-compose.yml
+# shared/utils/docker-compose.yml
 services:
   mysql:
     ports:
@@ -101,26 +141,24 @@ services:
 
 ---
 
----
+## Technical Details
 
-## 🔧 Technical Details
-
-### Port Forwarding with socat
+### Port Forwarding with socat (Go Container)
 
 This setup uses `socat` to seamlessly forward container ports to host services, allowing your application to use standard connection strings (like `127.0.0.1:3306` for MySQL) while avoiding port conflicts.
 
 **How it works:**
 1. Host services run on non-standard ports (MySQL: 4306, Redis: 7379, MongoDB: 37017)
-2. The `post-start-cmd.sh` script forwards standard ports in the container to host ports:
+2. The `go/post-start-cmd.sh` script forwards standard ports in the container to host ports:
 
 ```bash
-# Forward MySQL (3306 in container → 4306 on host)
+# Forward MySQL (3306 in container -> 4306 on host)
 nohup socat TCP-LISTEN:3306,fork,reuseaddr TCP:host.docker.internal:4306 > /tmp/socat-mysql.log 2>&1 &
 
-# Forward Redis (6379 in container → 7379 on host)  
+# Forward Redis (6379 in container -> 7379 on host)
 nohup socat TCP-LISTEN:6379,fork,reuseaddr TCP:host.docker.internal:7379 > /tmp/socat-redis.log 2>&1 &
 
-# Forward MongoDB (27017 in container → 37017 on host)
+# Forward MongoDB (27017 in container -> 37017 on host)
 nohup socat TCP-LISTEN:27017,fork,reuseaddr TCP:host.docker.internal:37017 > /tmp/socat-mongo.log 2>&1 &
 ```
 
@@ -130,4 +168,27 @@ nohup socat TCP-LISTEN:27017,fork,reuseaddr TCP:host.docker.internal:37017 > /tm
 
 ---
 
-**🎉 Result:** Your DevContainer behaves exactly like a local development environment!
+### Project Structure
+
+```
+devcontainer-go/
+├── go/                          # Go development container
+│   ├── Dockerfile
+│   ├── devcontainer.json
+│   └── post-start-cmd.sh
+├── node/                        # Node.js development container
+│   ├── Dockerfile
+│   └── devcontainer.json
+├── shared/                      # Shared configurations
+│   ├── zsh-config/
+│   │   ├── .zshrc
+│   │   └── .p10k.zsh
+│   └── utils/
+│       └── docker-compose.yml
+├── Makefile
+└── README.md
+```
+
+---
+
+**Result:** Your DevContainer behaves exactly like a local development environment!

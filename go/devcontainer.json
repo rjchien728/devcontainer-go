@@ -21,8 +21,7 @@
 			"extensions": [
 				"golang.go",
 				"eamodio.gitlens",
-				"zxh404.vscode-proto3",
-        "graphql.vscode-graphql"
+				"drblury.protobuf-vsc"
 			],
 			"settings": {
 				"terminal.integrated.defaultProfile.linux": "zsh"
