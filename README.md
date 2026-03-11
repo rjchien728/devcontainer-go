@@ -73,6 +73,7 @@ make all
 
 ```bash
 make node-20  # Node.js 20 with pnpm
+make node-22  # Node.js 22 with pnpm
 ```
 
 ---

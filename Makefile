@@ -63,7 +63,7 @@ all: 1.18 1.21 1.23 1.24
 NODE_IMAGE_NAME = devcontainer-node
 NODE_DOCKERFILE = node/Dockerfile
 
-.PHONY: node-20
+.PHONY: node-20 node-22
 
 node-20:
 	docker buildx build \
@@ -71,4 +71,12 @@ node-20:
 		-f $(NODE_DOCKERFILE) \
 		--build-arg NODE_VERSION=20 \
 		-t $(NODE_IMAGE_NAME):20 \
+		.
+
+node-22:
+	docker buildx build \
+		--load \
+		-f $(NODE_DOCKERFILE) \
+		--build-arg NODE_VERSION=22 \
+		-t $(NODE_IMAGE_NAME):22 \
 		.
