@@ -25,10 +25,17 @@ BUILD_ARGS_1_23 = \
 
 BUILD_ARGS_1_24 = \
 	--build-arg GO_VERSION=1.24 \
-	--build-arg PROTOC_GEN_GO_VERSION=v1.36.9 \
-	--build-arg PROTOC_GEN_GO_GRPC_VERSION=v1.5.1 \
+	--build-arg PROTOC_GEN_GO_VERSION=v1.36.11 \
+	--build-arg PROTOC_GEN_GO_GRPC_VERSION=v1.6.1 \
 	--build-arg GOPLS_VERSION=v0.20.0 \
-	--build-arg MOCKERY_VERSION=v2.50.0
+	--build-arg MOCKERY_VERSION=v2.53.6
+
+BUILD_ARGS_1_25 = \
+	--build-arg GO_VERSION=1.25 \
+	--build-arg PROTOC_GEN_GO_VERSION=v1.36.11 \
+	--build-arg PROTOC_GEN_GO_GRPC_VERSION=v1.6.1 \
+	--build-arg GOPLS_VERSION=v0.21.1 \
+	--build-arg MOCKERY_VERSION=v2.53.6
 
 # --- Build function ---
 define build_template
@@ -40,9 +47,9 @@ define build_template
 		.
 endef
 
-.PHONY: all 1.18 1.21 1.23 1.24
+.PHONY: all 1.18 1.21 1.23 1.24 1.25
 
-all: 1.18 1.21 1.23 1.24
+all: 1.18 1.21 1.23 1.24 1.25
 
 1.18:
 	$(call build_template,BUILD_ARGS_1_18,1.18)
@@ -55,6 +62,9 @@ all: 1.18 1.21 1.23 1.24
 
 1.24:
 	$(call build_template,BUILD_ARGS_1_24,1.24)
+
+1.25:
+	$(call build_template,BUILD_ARGS_1_25,1.25)
 
 # ===========================================
 # Node.js DevContainer Images

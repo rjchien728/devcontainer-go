@@ -1,11 +1,15 @@
 {
 	"name": "my-project",
 	"image": "devcontainer-go:1.21",
-	// "features": {
-	// 	"ghcr.io/devcontainers/features/node:1": {
-	// 		"version": "lts"
-	// 	}
-	// },
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"moby": false
+		},
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "none",
+			"pnpmVersion": "latest"
+		}
+	},
 	"workspaceFolder": "/my-project",
 	"mounts": [
 		"source=${localWorkspaceFolder},target=/my-project,type=bind,consistency=cached"
@@ -29,22 +33,12 @@
 		}
 	},
 	"forwardPorts": [
-		8080,
-		8082,
-		4012
+		8080
 	],
 	"portsAttributes": {
 		"8080": {
 			"label": "Web API",
 			"onAutoForward": "openBrowser"
-		},
-		"8082": {
-			"label": "gRPC",
-			"onAutoForward": "notify"
-		},
-		"4012": {
-			"label": "Health Check",
-			"onAutoForward": "notify"
 		}
 	}
 }
