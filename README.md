@@ -58,11 +58,11 @@ Use `make` to build the desired version image:
 
 ```bash
 # Build specific versions
-make 1.18  # Go 1.18 with gopls v0.14.2, mockery v2.20.0
-make 1.21  # Go 1.21 with gopls v0.16.1, mockery v2.32.4
-make 1.23  # Go 1.23 with gopls v0.20.0, mockery v2.47.0
-make 1.24  # Go 1.24 with gopls v0.20.0, mockery v2.53.6
-make 1.25  # Go 1.25 with gopls v0.21.1, mockery v2.53.6
+make 1.18  # Go 1.18 with gopls v0.14.2, mockery v2.20.0, mockgen v0.1.0
+make 1.21  # Go 1.21 with gopls v0.16.1, mockery v2.32.4, mockgen v0.4.0
+make 1.23  # Go 1.23 with gopls v0.20.0, mockery v2.47.0, mockgen v0.6.0
+make 1.24  # Go 1.24 with gopls v0.20.0, mockery v2.53.6, mockgen v0.6.0
+make 1.25  # Go 1.25 with gopls v0.21.1, mockery v2.53.6, mockgen v0.6.0
 
 # Build all Go versions at once
 make all
