@@ -95,3 +95,11 @@ node-22:
 		--build-arg NODE_VERSION=22 \
 		-t $(NODE_IMAGE_NAME):22 \
 		.
+
+node-24:
+	docker buildx build \
+		--load \
+		-f $(NODE_DOCKERFILE) \
+		--build-arg NODE_VERSION=24 \
+		-t $(NODE_IMAGE_NAME):24 \
+		.
